@@ -1,0 +1,64 @@
+<h2>Generador de color</h2>
+
+<form id="pluginForm">
+  <fieldset>
+    <legend>información del color</legend>
+    <p>
+      <label for="colorCode">Color</label>
+      <input type="color" id="colorCode" name="colorCode" value="#f65446">
+    </p>
+    <p>
+      <label for="colorName">Nombre del color</label>
+      <input type="text" id="colorName" name="colorName" value="Primary">
+    </p>
+    <p>
+      <label for="tintNumber">Número de degrade</label>
+      <input type="number" value="10" min="1" max="10" id="tintNumber" name="tintNumber">
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Frame information</legend>
+    <p>
+      <label for="circleSize">Tamaño del circulo</label>
+      <input type="number" value="120" min="48" id="circleSize" name="circleSize" >
+    </p>
+    <p>
+      <label for="circleSpacing">Espacio de los circulos</label>
+      <input type="number" value="32" min="0" id="circleSpacing" name="circleSpacing" >
+    </p>
+    <p>
+      <label for="tintNumber">Orientación del frame</label>
+      <input type="radio"  id="frameH" name="direction" checked>
+      <label for="frameH">Horizontal</label>
+      <input type="radio"  id="frameV" name="direction" checked>
+      <label for="frameV">Vertical</label>
+    </p>
+  </fieldset>
+
+  <input type="hidden" name="frameDirection" value="horizontal">
+  <button id="generate">Generar degrade</button>
+  <button id="cancel">Cancel</button>
+</form>
+
+<script>
+  document.getElementById("generate").onclick = (event) => {
+    let pluginForm = document.querySelector('#pluginForm')
+
+    let pluginFormData = new FormData(pluginForm)
+
+    let formDataObj = {}
+    for(let[key,value] of pluginFormData) {
+      formDataObj[key] = value
+    }
+
+    console.log(formDataObj)
+    parent.postMessage({pluginMessage: {type:'actionGenerate'}}, '*')
+  }
+
+  document.getElementById("cancel").onclick = (event) => {
+    parent.postMessage({pluginMessage: {type:'actionExit'}}, '*')
+  }
+
+</script>
+/#pluginForm
