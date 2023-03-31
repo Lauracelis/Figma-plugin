@@ -31,7 +31,7 @@
       <label for="tintNumber">Orientación del frame</label>
       <input type="radio"  id="frameH" name="direction" checked>
       <label for="frameH">Horizontal</label>
-      <input type="radio"  id="frameV" name="direction" checked>
+      <input type="radio"  id="frameV" name="direction">
       <label for="frameV">Vertical</label>
     </p>
   </fieldset>
@@ -47,13 +47,16 @@
 
     let pluginFormData = new FormData(pluginForm)
 
+    if(document.querySelector('#frameV').checked){
+       pluginFormData.set('frameDirection', 'vertical')
+    }
+
     let formDataObj = {}
     for(let[key,value] of pluginFormData) {
       formDataObj[key] = value
     }
 
-    console.log(formDataObj)
-    parent.postMessage({pluginMessage: {type:'actionGenerate'}}, '*')
+    parent.postMessage({pluginMessage: {type:'actionGenerate', formDataObj }}, '*')
   }
 
   document.getElementById("cancel").onclick = (event) => {
